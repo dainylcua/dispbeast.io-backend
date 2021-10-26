@@ -3,8 +3,8 @@
 ////
 const express = require('express')
 const mongoose = require('mongoose')
-const session = require('express-session')
-const methOv = require('method-override')
+const morgan = require('morgan')
+const cors = require('cors')
 
 
 // Config .env
@@ -18,9 +18,9 @@ mongoose.connect(process.env.DATABASE_URL)
 
 const db = mongoose.connection
 
-db.on('error', (err) => console.log(`Mushroom dance, mushroom dance, whatever could it mean? It means you've got an error: ${err.message}.`))
-db.on('connected', () => console.log(`hOI! welcome to... PORT ${db.port}!`))
-db.on('disconnected', () => console.log(`User... it was nice to meet you. Goodbye.`))
+db.on('error', (err) => console.log(`Error: ${err.message}.`))
+db.on('connected', () => console.log(`Connected to MongoDB on port: ${db.port}!`))
+db.on('disconnected', () => console.log(`Disconnected from MongoDB`))
 
 ///////
 // Models and Controllers
@@ -33,39 +33,21 @@ db.on('disconnected', () => console.log(`User... it was nice to meet you. Goodby
 ////
 
 const app = express()
-app.use(methOv('_method'))
 app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
-app.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false
-}))
+app.use(morgan('dev'))
+app.use(cors())
 
 ///////
 // Routes
 ////
-const userController = require('./controllers/users.js')
-const sessionController = require('./controllers/sessions.js')
-
-
-app.use('/users', userController)
-app.use('/sessions', sessionController)
 
 
 
 app.get('/', (req, res) => {
-    if (req.session.currentUser) {
-        res.render('dashboard.ejs', {
-            currentUser: req.session.currentUser,
-        })
-    } else {
-        res.render('index.ejs', {
-            currentUser: req.session.currentUser,
-        })
-    }
+    res.send('hello world')
 })
 
 
@@ -73,4 +55,4 @@ app.get('/', (req, res) => {
 // Listener
 ////
 const PORT = process.env.PORT
-app.listen(PORT, () => console.log(`You wish to know how to return "home", do you not? Ahead of us lies port ${PORT}.`))
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}.`))
