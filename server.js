@@ -43,11 +43,19 @@ app.use(cors())
 ///////
 // Routes
 ////
+const itemController = require('./controllers/items')
+const listingController = require('./controllers/listings')
 
+app.use('/items', itemController)
+app.use('/listings', listingController)
 
 
 app.get('/', (req, res) => {
-    res.send('hello world')
+    try {
+        res.send('hello world')
+    } catch (error) {
+        res.send(`error: ${error}`)
+    }
 })
 
 
