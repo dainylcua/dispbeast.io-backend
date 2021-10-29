@@ -5,6 +5,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
+const admin = require("firebase-admin")
 
 
 // Config .env
@@ -31,7 +32,6 @@ db.on('disconnected', () => console.log(`Disconnected from MongoDB`))
 ///////
 // Mount Middleware
 ////
-
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({
@@ -40,14 +40,33 @@ app.use(express.urlencoded({
 app.use(morgan('dev'))
 app.use(cors())
 
+//// Authorization Middleware
+admin.initializeApp({
+    credential: admin.credential.cert(
+        {
+            "type": "service_account",
+            "project_id": "dispbeast",
+            "private_key_id": process.env.PRIVATE_KEY_ID,
+            "private_key": process.env.PRIVATE_KEY,
+            "client_email": "firebase-adminsdk-wevqv@dispbeast.iam.gserviceaccount.com",
+            "client_id": process.env.CLIENT_ID,
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-wevqv%40dispbeast.iam.gserviceaccount.com"
+        }
+    )
+});
+
+
 ///////
 // Routes
 ////
 const itemController = require('./controllers/items')
 const listingController = require('./controllers/listings')
 
-app.use('/items', itemController)
-app.use('/listings', listingController)
+app.use('/api/items', itemController)
+app.use('/api/listings', listingController)
 
 
 app.get('/', (req, res) => {
