@@ -16,7 +16,7 @@ const itemSchema = Schema({
     rarity: { type: String, required: true },
     ac: { type: Number, default: 0 },
     damage: { type: damageSchema, default: {} },
-    effects: { type: Array, default: [] },
+    effects: { type: String },
     weight: { type: Number, required: true, default: 1 }
 }, { timestamps: true })
 
