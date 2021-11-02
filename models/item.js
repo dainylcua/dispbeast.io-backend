@@ -17,7 +17,7 @@ const itemSchema = Schema({
     ac: { type: Number, default: 0 },
     damage: { type: damageSchema, default: {} },
     weight: { type: Number, required: true, default: 1 },
-    owner: { type: String, required: true }
+    owner: { type: Schema.Types.ObjectId, ref: "User" }
 }, { timestamps: true })
 
 ///////

@@ -3,7 +3,7 @@
 ////
 const itemRouter = require('express').Router()
 const Item = require('../models/item')
-const { rarityArray, raritySelector, damageTypeArray, damageTypeSelector, damageQuantityArray, damageQuantitySelector } = require('../data/itemGenerator')
+const { weaponGenerator, armorGenerator } = require('../data/itemGenerator')
 
 ///////
 // Mount Middleware
@@ -27,10 +27,13 @@ itemRouter.put('/:id', async (req, res) => {
 })
 
 itemRouter.post('/', async (req, res) => {
-    if(req.body.itemType === 'weapon') {
-
-    }
     res.json(await Item.create(req.body))
+})
+
+itemRouter.post('/newrandom', async (req, res) => {
+    const genArmor = armorGenerator()
+    const genWeapon = weaponGenerator()
+    res.json()
 })
 
 itemRouter.get('/:id', async (req, res) => {

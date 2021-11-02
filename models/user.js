@@ -9,9 +9,8 @@ const userSchema = Schema({
     email: { type: String, unique: true, required: true },
     stats: { type: Array, required: true, default: [1, 1, 1, 1, 1, 1] },
     money: { type: Number, required: true, default: 50000 },
-    inventory: { type: Array, required: true, default: [] },
-    listings: { type: Array, required: true, default: [] },
-    admin: { type: Boolean, default: false }
+    inventory: { type: Schema.Types.ObjectId, required: true, default: [], ref: "Item" },
+    listings: { type: Schema.Types.ObjectId, required: true, default: [], ref: "Listing" }
 }, { timestamps: true })
 
 ///////

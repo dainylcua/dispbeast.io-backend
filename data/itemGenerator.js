@@ -72,3 +72,5 @@ const armorGenerator = function() {
         weight
     }
 }
+
+module.exports = { weaponGenerator, armorGenerator }
