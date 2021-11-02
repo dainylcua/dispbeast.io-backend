@@ -7,11 +7,9 @@ const Schema = mongoose.Schema
 const userSchema = Schema({
     firebaseId: { type: String, unique: true, required: true },
     email: { type: String, unique: true, required: true },
-    username: { type: String, unique: true, required: true, default: 'testuser' },
     stats: { type: Array, required: true, default: [1, 1, 1, 1, 1, 1] },
     money: { type: Number, required: true, default: 50000 },
     inventory: { type: Array, required: true, default: [] },
-    equipment: { type: Array, required: true, default: [] },
     listings: { type: Array, required: true, default: [] },
     admin: { type: Boolean, default: false }
 }, { timestamps: true })
