@@ -9,8 +9,16 @@ const userSchema = Schema({
     email: { type: String, unique: true, required: true },
     stats: { type: Array, required: true, default: [1, 1, 1, 1, 1, 1] },
     money: { type: Number, required: true, default: 50000 },
-    inventory: { type: Schema.Types.ObjectId, required: true, default: [], ref: "Item" },
-    listings: { type: Schema.Types.ObjectId, required: true, default: [], ref: "Listing" }
+    inventory: [
+        {
+            item: { type: Schema.Types.ObjectId, ref: "Item" }
+        }
+    ],
+    listings: [
+        {
+            listing: { type: Schema.Types.ObjectId, ref: "Listing" }
+        }
+    ],
 }, { timestamps: true })
 
 ///////

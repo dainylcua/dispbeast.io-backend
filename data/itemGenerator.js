@@ -21,7 +21,7 @@ const armorMaterials = ['Leather', 'Steel', 'Iron', 'Chainmail', 'Adamantium', '
     'Wooden', 'Reinforced Hide']
 
 // Rare selectors
-const rarityArray = ['common', 'common', 'uncommon', 'rare', 'very rare', 'legndary', 'artifact']
+const rarityArray = ['common', 'common', 'uncommon', 'rare', 'veryRare', 'legndary', 'artifact']
 const damageQuantityArray = [1, 1, 2, 3, 4]
 const damageDiceArray = [4, 4, 6, 8, 10, 12]
 const armorClassArray = [10, 10, 11, 12, 13, 14, 15, 16, 17, 18]

@@ -3,6 +3,7 @@
 ////
 const itemRouter = require('express').Router()
 const Item = require('../models/item')
+const mongoose = require('mongoose')
 const { weaponGenerator, armorGenerator } = require('../data/itemGenerator')
 
 ///////
@@ -31,9 +32,14 @@ itemRouter.post('/', async (req, res) => {
 })
 
 itemRouter.post('/newrandom', async (req, res) => {
+    const mongoId = mongoose.Types.ObjectId(req.body._id)
     const genArmor = armorGenerator()
     const genWeapon = weaponGenerator()
-    res.json()
+    const ownArmor = {...genArmor, owner: mongoId }
+    const ownWeapon = {...genWeapon, owner: mongoId } 
+    const createdArmor = await Item.create(ownArmor)
+    const createdWeapon = await Item.create(ownWeapon)
+    res.json([createdArmor, createdWeapon])
 })
 
 itemRouter.get('/:id', async (req, res) => {
