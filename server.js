@@ -28,7 +28,6 @@ db.on('disconnected', () => console.log(`Disconnected from MongoDB`))
 ////
 
 
-
 ///////
 // Mount Middleware
 ////
@@ -56,17 +55,35 @@ admin.initializeApp({
             "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-wevqv%40dispbeast.iam.gserviceaccount.com"
         }
     )
-});
+})
+app.use(async function(req, res, next)  {
+    const token = req.get('Authorization')
+    // Checks headers for Authorization
 
+    // If there is a header, then log in the user
+    if(token) {
+        const authUser = await admin.auth().verifyIdToken(token.replace('Bearer ', ''))
+        req.user = authUser
+    }
+
+    next()
+})
+
+function isAuthenticated(req, res, next) {
+    if(req.user) return next()
+    else res.status(401).json({message: 'Unauthorized user detected'})
+}
 
 ///////
 // Routes
 ////
 const itemController = require('./controllers/items')
 const listingController = require('./controllers/listings')
+const userController = require('./controllers/users')
 
-app.use('/api/items', itemController)
-app.use('/api/listings', listingController)
+app.use('/api/items', isAuthenticated, itemController)
+app.use('/api/listings', isAuthenticated, listingController)
+app.use('/api/users', userController)
 
 
 app.get('/', (req, res) => {
