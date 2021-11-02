@@ -17,7 +17,8 @@ const itemSchema = Schema({
     ac: { type: Number, default: 0 },
     damage: { type: damageSchema, default: {} },
     effects: { type: String },
-    weight: { type: Number, required: true, default: 1 }
+    weight: { type: Number, required: true, default: 1 },
+    owner: { type: String, required: true }
 }, { timestamps: true })
 
 ///////

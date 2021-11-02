@@ -15,6 +15,7 @@ const User = require('../models/user')
 userRouter.post('/', async (req, res) => {
     const isUser = await User.findOne({ firebaseId: req.body.firebaseId })
     if(!isUser) {
+        // TODO: Potentially move this to its own model?
         let statArray = [1, 1, 1, 1, 1, 1]
         statArray.forEach((stat, idx) => {
             let statCalc = [1, 1, 1]
