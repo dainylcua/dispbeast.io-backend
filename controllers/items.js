@@ -3,6 +3,7 @@
 ////
 const itemRouter = require('express').Router()
 const Item = require('../models/item')
+const User = require('../models/user')
 const mongoose = require('mongoose')
 const { weaponGenerator, armorGenerator } = require('../data/itemGenerator')
 
@@ -18,11 +19,6 @@ itemRouter.get('/', async (req, res) => {
     res.json(await Item.find({}))
 })
 
-itemRouter.delete('/:id', async (req, res) => {
-    res.json(await Item.findByIdAndDelete(req.params.id))
-})
-
-
 itemRouter.put('/:id', async (req, res) => {
     res.json(await Item.findByIdAndUpdate(req.params.id, req.body, { new: true }))
 })
@@ -37,9 +33,12 @@ itemRouter.post('/newrandom', async (req, res) => {
     const genWeapon = weaponGenerator()
     const ownArmor = {...genArmor, owner: mongoId }
     const ownWeapon = {...genWeapon, owner: mongoId } 
-    const createdArmor = await Item.create(ownArmor)
-    const createdWeapon = await Item.create(ownWeapon)
-    res.json([createdArmor, createdWeapon])
+    const createdItems = await Item.create(ownArmor, ownWeapon)
+    res.json(createdItems)
+})
+
+itemRouter.get('/inventory/:id', async (req, res) => {
+    res.json(await Item.find({owner: req.params.id}))
 })
 
 itemRouter.get('/:id', async (req, res) => {

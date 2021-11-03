@@ -23,8 +23,8 @@ userRouter.post('/', async (req, res) => {
     }
 })
 
-userRouter.get('/:id', async (req, res) => {
-    res.json(await User.findById(req.params.id))
+userRouter.get('/:uid', async (req, res) => {
+    res.json(await User.findOne({firebaseId: req.params.uid}))
 })
 
 module.exports = userRouter
