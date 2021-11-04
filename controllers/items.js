@@ -37,6 +37,20 @@ itemRouter.post('/newrandom', async (req, res) => {
     res.json(createdItems)
 })
 
+itemRouter.post('/loot', async (req, res) => {
+    const mongoId = mongoose.Types.ObjectId(req.body._id)
+    const randNum = Math.round(Math.random())
+    let ownItem = ''
+    if(randNum) {
+        const genItem = armorGenerator()
+        ownItem = {...genItem, owner: mongoId }
+    } else {
+        const genItem = weaponGenerator()
+        ownItem = {...genItem, owner: mongoId } 
+    }
+    res.json(await Item.create(ownItem))
+})
+
 itemRouter.get('/inventory/:id', async (req, res) => {
     res.json(await Item.find({owner: req.params.id}))
 })
