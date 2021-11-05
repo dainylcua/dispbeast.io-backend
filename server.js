@@ -98,5 +98,5 @@ app.get('/', (req, res) => {
 ///////
 // Listener
 ////
-const PORT = process.env.PORT
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}.`))
+
+app.listen(process.env.PORT, () => console.log(`Listening on port: ${PORT}.`))
