@@ -10,6 +10,7 @@ const listingSchema = Schema({
     sellerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     price: { type: Number, required: true },
     bids: { type: Array, default: [] },
+    rarity: { type: String, default: 'common' },
     itemColor: { type: String, default: 'text-white' },
     endDate: { type: Date, required: true } 
 }, { timestamps: true })

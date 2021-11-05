@@ -20,8 +20,8 @@ listingRouter.post('/', async (req, res) => {
     res.json(await Listing.create(req.body))
 })
 
-listingRouter.get('/mylistings', async (req, res) => {
-    res.json(await Listing.find({}))
+listingRouter.delete('/:id', async (req, res) => {
+    res.json(await Listing.findByIdAndDelete(req.params.id))
 })
 
 listingRouter.get('/:id', async (req, res) => {

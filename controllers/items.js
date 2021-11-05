@@ -20,7 +20,10 @@ itemRouter.get('/', async (req, res) => {
 })
 
 itemRouter.put('/:id', async (req, res) => {
-    res.json(await Item.findByIdAndUpdate(req.params.id, req.body, { new: true }))
+    const newOwner =  mongoose.Types.ObjectId(req.body.buyer)
+    const id = mongoose.Types.ObjectId(req.params.id)
+    console.log(newOwner)
+    res.json(await Item.findByIdAndUpdate(id, { owner: newOwner }))
 })
 
 itemRouter.post('/', async (req, res) => {
