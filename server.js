@@ -37,7 +37,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors("https://dispbeastio.netlify.app/"))
 
 //// Authorization Middleware
 admin.initializeApp({
