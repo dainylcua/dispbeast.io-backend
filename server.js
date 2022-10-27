@@ -38,7 +38,7 @@ app.use(express.urlencoded({
 }))
 app.use(morgan('dev'))
 app.use(cors({
-  origin: "https://dispbeastio.netlify.app/"
+  origin: false
 }))
 
 //// Authorization Middleware
